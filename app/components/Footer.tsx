@@ -6,14 +6,14 @@ import {
   BsFacebook,
   BsReddit,
 } from "react-icons/bs";
-import payment from "../images/payment.png";
+
 import Container from "./Container";
 import { Button } from "@/components/ui/button";
 
 import Link from "next/link";
-import Image from "next/image";
+
 import { useState } from "react";
-import { error } from "console";
+
 
 
 
@@ -28,7 +28,7 @@ const Footer = () => {
 
   const [statusMessage, setStatusMessage] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -36,7 +36,7 @@ const Footer = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
     console.log(formData)
 
@@ -50,7 +50,7 @@ const Footer = () => {
     });
     
 
-    const result = await res.json();
+    // const result = await res.json();
 
     if (res.status === 200) {
       setStatusMessage('Your message has been sent!');
@@ -60,8 +60,10 @@ const Footer = () => {
         email: '',
         message: '',
       });
+      console.log(statusMessage)
     } else {
       setStatusMessage('Something went wrong. Please try again later.');
+      console.log(statusMessage)
     }
   };
 
@@ -147,7 +149,7 @@ const Footer = () => {
 
         <div className="bg-gray-100 p-8 rounded-lg shadow-md max-w-lg mx-auto">
           <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
-            Have Questions? We'd love to help!
+            Have Questions? We&apos;d love to help!
           </h1>
           <form action="" className="space-y-4" onSubmit={handleSubmit} >
             <div>
@@ -214,7 +216,7 @@ const Footer = () => {
               <textarea
                 id="message"
                 placeholder="Write your message here"
-                rows="4"
+                rows={4}
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
@@ -222,13 +224,13 @@ const Footer = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
               ></textarea>
             </div>
-            <button
+            <Button
               type="submit"
               
               className="w-full bg-primary text-white py-2 rounded-lg text-lg font-medium hover:bg-primary-dark focus:ring-4 focus:ring-primary-light transition duration-300"
             >
-              Let's Talk
-            </button>
+              Let&apos;s Talk
+            </Button>
           </form>
          
         </div>
