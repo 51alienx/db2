@@ -9,10 +9,11 @@ import {
 
 import Container from "./Container";
 import { Button } from "@/components/ui/button";
-
 import Link from "next/link";
-
 import { useState } from "react";
+import toast from "react-hot-toast";
+
+
 
 
 
@@ -27,6 +28,7 @@ const Footer = () => {
   });
 
   const [statusMessage, setStatusMessage] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -39,6 +41,8 @@ const Footer = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
     console.log(formData)
+    const loadingToast = toast.loading('Sending your message...');
+    setLoading(true);
 
     const res = await fetch('/api/emails', {
       method: 'POST',
@@ -53,6 +57,8 @@ const Footer = () => {
     // const result = await res.json();
 
     if (res.status === 200) {
+      toast.dismiss(loadingToast);
+      toast.success('Message sent successfully!');
       setStatusMessage('Your message has been sent!');
       setFormData({
         firstName: '',
@@ -62,9 +68,12 @@ const Footer = () => {
       });
       console.log(statusMessage)
     } else {
+      toast.dismiss(loadingToast);
+      toast.error('Failed to send message. Please try again.');
       setStatusMessage('Something went wrong. Please try again later.');
       console.log(statusMessage)
     }
+    setLoading(false);
   };
 
   
@@ -124,7 +133,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col md:items-center md:text-center">
           <p className="text-lg font-semibold">Links</p>
           <ul className="text-base font-medium mt-2 flex flex-col gap-y-2">
             <Link href={"/"}>
@@ -224,13 +233,16 @@ const Footer = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
               ></textarea>
             </div>
-            <Button
-              type="submit"
-              
-              className="w-full bg-primary text-white py-2 rounded-lg text-lg font-medium hover:bg-primary-dark focus:ring-4 focus:ring-primary-light transition duration-300"
-            >
-              Let&apos;s Talk
-            </Button>
+            {!loading ? (
+              <Button
+                type="submit"
+                className="w-full bg-primary text-white py-2 rounded-lg text-lg font-medium hover:bg-primary-dark focus:ring-4 focus:ring-primary-light transition duration-300"
+              >
+                Let&apos;s Talk
+              </Button>
+            ) : (
+              <p className="text-primary text-center">Submitting...</p>
+            )}
           </form>
          
         </div>
