@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import MobileNav from "./Mobnav";
 
 
 
@@ -11,6 +12,7 @@ const links = [
   { name: "contact", href: "/contact" },
   { name: "projects", href: "/projects" },
 ];
+
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -46,6 +48,7 @@ export default function Navbar() {
             </div>
           ))}
         </nav>
+        <MobileNav/>
         
 
 
