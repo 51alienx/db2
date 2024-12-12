@@ -40,7 +40,7 @@ const ServicesPage = () => {
         Our Services
       </h1>
       <p className="text-lg text-center text-gray-600 max-w-3xl mx-auto mb-12">
-        We offer a wide range of construction services to meet the needs of our clients. Whether you're building a new home, revamping your workspace, or developing infrastructure, we are here to deliver excellence.
+        We offer a wide range of construction services to meet the needs of our clients. Whether you&aposre building a new home, revamping your workspace, or developing infrastructure, we are here to deliver excellence.
       </p>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
         {services.map((service, index) => (
